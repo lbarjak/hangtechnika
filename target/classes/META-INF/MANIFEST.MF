@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Built-By: lbarjak
-Build-Jdk: 11.0.5
+Build-Jdk-Spec: 11
+Main-Class: arlistak.Arlistak
 Created-By: Maven Integration for Eclipse
 
