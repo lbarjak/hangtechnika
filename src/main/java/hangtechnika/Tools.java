@@ -1,5 +1,6 @@
 package hangtechnika;
 
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -7,8 +8,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.Set;
+
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
 
 public class Tools {
+	
+	Set<String> htKeys;
 
 	public String now() {
 		Date today = new Date();
@@ -50,6 +57,14 @@ public class Tools {
 		toShoprenterMap.get("columns").put("Cikkszám",
 				new ArrayList<>(Arrays.asList("Cikkszám", "Nincs készleten állapot")));
 		return toShoprenterMap;
+	}
+
+	public void hangzavarSet()
+			throws FileNotFoundException, InvalidFormatException, IOException, OpenXML4JException {
+		String xlsxName = "hangzavar-xlsx-export-2020-01-07_15_28_01.xlsx";
+		LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> hangzavarMap = new LinkedHashMap<>();
+		new FromXLSX().read(xlsxName, hangzavarMap);
+		htKeys = hangzavarMap.get("export").keySet();
 	}
 
 }
