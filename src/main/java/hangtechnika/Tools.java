@@ -14,7 +14,8 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
 
 public class Tools {
-	
+
+	LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> hangzavarMap = new LinkedHashMap<>();
 	Set<String> htKeys;
 
 	public String now() {
@@ -59,19 +60,17 @@ public class Tools {
 		return toShoprenterMap;
 	}
 
-	public void hangzavarInit()
-			throws FileNotFoundException, InvalidFormatException, IOException, OpenXML4JException {
+	public void hangzavarInit() throws FileNotFoundException, InvalidFormatException, IOException, OpenXML4JException {
 		String xlsxName = "hangzavar-xlsx-export-2020-01-07_15_28_01.xlsx";
-		LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> hangzavarMap = new LinkedHashMap<>();
 		new FromXLSX().read(xlsxName, hangzavarMap);
 		htKeys = hangzavarMap.get("export").keySet();
 	}
-	
+
 	public String rounding(String numberSring) {
 		Integer num = (int) (100 * Double.parseDouble(numberSring));
-		Double number = (double) (num/100);
+		Double number = (double) (num / 100);
 		numberSring = String.valueOf(number);
 		return numberSring;
-	} 
+	}
 
 }

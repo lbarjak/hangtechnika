@@ -44,9 +44,9 @@ public class Voicekraft {
 			}
 		}
 
-		//voiceKraftToNetsoftArfrissites();
+		voiceKraftToNetsoftArfrissites();
 		voiceKraftToNetsoftArlista();
-		//voiceKraftToShoprenterKeszlet();
+		voiceKraftToShoprenterKeszlet();
 	}
 
 	public void voiceKraftToNetsoftArfrissites() {
