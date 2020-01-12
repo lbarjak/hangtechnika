@@ -86,7 +86,7 @@ public class Voicekraft {
 		for (ArrayList<String> row : out) {
 			ArrayList<String> reducedRow = new ArrayList<>();
 			reducedRow.add(row.get(0));
-			reducedRow.add(row.get(4));
+			reducedRow.add(row.get(4).replace("van", "Szerdára").replace("nincs", "Jelenleg nem érhető el!"));
 			export.put(row.get(0), reducedRow);
 		}
 		export.remove("Termék kód");
