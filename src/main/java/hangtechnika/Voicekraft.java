@@ -31,7 +31,7 @@ public class Voicekraft {
 		tools.hangzavarInit();
 		for (String key : sheetFromKapott.keySet()) {
 			String termekKod = sheetFromKapott.get(key).get(0).replace(".0", "");
-			if (sheetFromKapott.get(key).get(0).matches("\\d{2,}.+") && tools.htKeys.contains(termekKod)) {
+			if (termekKod.matches("\\d{2,}.+") && tools.htKeys.contains(termekKod)) {
 				String nettoEladasiEgysegar = tools.rounding(sheetFromKapott.get(key).get(4));
 				String beszerzesiAr = String.valueOf((Double.parseDouble(nettoEladasiEgysegar) * 0.75));
 				String raktarkeszlet = sheetFromKapott.get(key).get(5);
@@ -44,9 +44,9 @@ public class Voicekraft {
 			}
 		}
 
-		voiceKraftToNetsoftArfrissites();
+		//voiceKraftToNetsoftArfrissites();
 		voiceKraftToNetsoftArlista();
-		voiceKraftToShoprenterKeszlet();
+		//voiceKraftToShoprenterKeszlet();
 	}
 
 	public void voiceKraftToNetsoftArfrissites() {
@@ -58,14 +58,26 @@ public class Voicekraft {
 	}
 
 	public void voiceKraftToNetsoftArlista() {
-		ArrayList<String> toCSVFile = new ArrayList<>();
+//		ArrayList<String> toCSVFile = new ArrayList<>();
+//		for (ArrayList<String> row : out) {
+//			toCSVFile.add(row.get(0) // Termék kód
+//					+ ";" + row.get(1).replace(".", ",") // Nettó eladási egységár
+//					+ ";" + row.get(2).replace(".", ",") // Beszerzési ár (Nettó)
+//					+ ";" + row.get(3)); // Termék típus
+//		}
+//		tools.writeToFileCSV("voicek_netsoft_arlistak_", toCSVFile);
+		
+		LinkedHashMap<String, ArrayList<String>> toNetsoftArlista = new LinkedHashMap<>();
 		for (ArrayList<String> row : out) {
-			toCSVFile.add(row.get(0) // Termék kód
-					+ ";" + row.get(1).replace(".", ",") // Nettó eladási egységár
-					+ ";" + row.get(2).replace(".", ",") // Beszerzési ár (Nettó)
-					+ ";" + row.get(3)); // Termék típus
+			toNetsoftArlista.put(row.get(0), row);
 		}
-		tools.writeToFileCSV("voicek_netsoft_arlistak_", toCSVFile);
+		ArrayList<String> toFile = new Arlistak().calculate(toNetsoftArlista);
+		toFile.add(0, "Termék kód" + ";" + "Árlista" + ";" + "Egységár" + ";" + "Alapár (Nettó)" + ";" + "Árrés %" + ";"
+				+ "Kedvezmény %");
+		for (int i = 0; i < toFile.size(); i++) {
+			toFile.set(i, toFile.get(i).replaceFirst("(;[^;]+){2}$", ""));
+		}
+		tools.writeToFileCSV("voicek_netsoft_arlistak_", toFile);	
 	}
 
 	public void voiceKraftToShoprenterKeszlet() throws FileNotFoundException, IOException {
