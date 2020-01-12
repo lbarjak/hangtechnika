@@ -2,7 +2,6 @@ package hangtechnika;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -13,7 +12,7 @@ import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
 public class Voicekraft {
 
 	private Tools tools = new Tools();
-	private static DecimalFormat df2 = new DecimalFormat("#");
+
 	private ArrayList<ArrayList<String>> sheetNamesKapottInput;
 	private String sheetNameFromKapott;
 	private LinkedHashMap<String, ArrayList<String>> sheetFromKapott;
@@ -23,21 +22,24 @@ public class Voicekraft {
 
 	public void convert() throws FileNotFoundException, InvalidFormatException, IOException, OpenXML4JException {
 
-		sheetNamesKapottInput = new FromXLSX().read(kapottFile, kapottMap); // amit kapunk
+		sheetNamesKapottInput = new FromXLSX().read(kapottFile, kapottMap);
 		sheetNameFromKapott = sheetNamesKapottInput.get(0).get(0);
 		sheetFromKapott = kapottMap.get(sheetNameFromKapott);
 
 		out.add(new ArrayList<String>(Arrays.asList("Termék kód", "Nettó eladási egységár", "Beszerzési ár (Nettó)",
 				"Termék típus", "Raktárkészlet")));
-		tools.hangzavarSet();
+		tools.hangzavarInit();
 		for (String key : sheetFromKapott.keySet()) {
-			if (sheetFromKapott.get(key).get(0).matches("\\d{2,}.+")
-					&& tools.htKeys.contains(sheetFromKapott.get(key).get(0).replace(".0", ""))) {
-				out.add(new ArrayList<String>(Arrays.asList(sheetFromKapott.get(key).get(0).replace(".0", ""), // Termék_kód
-						df2.format(Double.parseDouble(sheetFromKapott.get(key).get(4))), // Nettó eladási egységár
-						df2.format(Double.parseDouble(sheetFromKapott.get(key).get(4)) * 0.75), // Beszerzési ár (Nettó)
+			String termekKod = sheetFromKapott.get(key).get(0).replace(".0", "");
+			if (sheetFromKapott.get(key).get(0).matches("\\d{2,}.+") && tools.htKeys.contains(termekKod)) {
+				String nettoEladasiEgysegar = tools.rounding(sheetFromKapott.get(key).get(4));
+				String beszerzesiAr = String.valueOf((Double.parseDouble(nettoEladasiEgysegar) * 0.75));
+				String raktarkeszlet = sheetFromKapott.get(key).get(5);
+				out.add(new ArrayList<String>(Arrays.asList(termekKod, // Termék_kód
+						nettoEladasiEgysegar, // Nettó eladási egységár
+						beszerzesiAr, // Beszerzési ár (Nettó)
 						"Termék", // Termék típus
-						sheetFromKapott.get(key).get(5) // Raktárkészlet
+						raktarkeszlet // Raktárkészlet
 				)));
 			}
 		}
@@ -60,8 +62,8 @@ public class Voicekraft {
 		for (ArrayList<String> row : out) {
 			toCSVFile.add(row.get(0) // Termék kód
 					+ ";" + row.get(1).replace(".", ",") // Nettó eladási egységár
-					+ ";" + row.get(2).replace(".", ",") + ";" // Beszerzési ár (Nettó)
-					+ row.get(3)); // Termék típus
+					+ ";" + row.get(2).replace(".", ",") // Beszerzési ár (Nettó)
+					+ ";" + row.get(3)); // Termék típus
 		}
 		tools.writeToFileCSV("voicek_netsoft_arlistak_", toCSVFile);
 	}
@@ -81,4 +83,5 @@ public class Voicekraft {
 		String time = tools.now();
 		toxlsx.writeout("voicek_shopr_keszl_" + time + ".xlsx");
 	}
+	
 }
