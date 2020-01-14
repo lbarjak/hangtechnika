@@ -68,18 +68,25 @@ public class Tools {
 		new FromXLSX().read(xlsxName, hangzavarMap);
 		htKeys = hangzavarMap.get("export").keySet();
 	}
-
-	public String myDecimalFormat(String numberSring) {
-		Integer num = (int) (100 * Double.parseDouble(numberSring));
-		Double number = (double) (num / 100);
-		numberSring = String.valueOf(number);
-		return numberSring;
+	
+	public String round(String numberSring) {
+		Integer num = (int) Math.round(Double.parseDouble(numberSring));
+		return num.toString();
+	}
+	public String round(Double numberSring) {
+		Integer num = (int) Math.round(numberSring);
+		return num.toString();
+	}
+	
+	public String round2(String numberSring) {
+		Double num = Math.round(100.0 * (Double.parseDouble(numberSring))) / 100.0;
+		DecimalFormat df = new DecimalFormat("0,00");
+		return df.format(num);
 	}
 	
 	public String decimalFormat(double number) {
-
 		Locale locale = new Locale("hu", "HU");
-		String pattern = ".##";
+		String pattern = "0.00";
 		DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getNumberInstance(locale);
 		decimalFormat.applyPattern(pattern);
 		String formatted = decimalFormat.format(number);

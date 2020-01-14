@@ -32,8 +32,8 @@ public class Voicekraft {
 		for (String key : sheetFromKapott.keySet()) {
 			String termekKod = sheetFromKapott.get(key).get(0).replace(".0", "");
 			if (termekKod.matches("\\d{2,}.+") && tools.htKeys.contains(termekKod)) {
-				String nettoEladasiEgysegar = tools.myDecimalFormat(sheetFromKapott.get(key).get(4));
-				String beszerzesiAr = String.valueOf((Double.parseDouble(nettoEladasiEgysegar) * 0.75));
+				String nettoEladasiEgysegar = tools.round(sheetFromKapott.get(key).get(4));
+				String beszerzesiAr = tools.round(String.valueOf((Double.parseDouble(nettoEladasiEgysegar) * 0.75)));
 				String raktarkeszlet = sheetFromKapott.get(key).get(5);
 				out.add(new ArrayList<String>(Arrays.asList(termekKod, // Termék_kód
 						nettoEladasiEgysegar, // Nettó eladási egységár
@@ -57,16 +57,7 @@ public class Voicekraft {
 		tools.writeToFileCSV("voicek_netsoft_arfriss_", toCSVFile);
 	}
 
-	public void voiceKraftToNetsoftArlista() {
-//		ArrayList<String> toCSVFile = new ArrayList<>();
-//		for (ArrayList<String> row : out) {
-//			toCSVFile.add(row.get(0) // Termék kód
-//					+ ";" + row.get(1).replace(".", ",") // Nettó eladási egységár
-//					+ ";" + row.get(2).replace(".", ",") // Beszerzési ár (Nettó)
-//					+ ";" + row.get(3)); // Termék típus
-//		}
-//		tools.writeToFileCSV("voicek_netsoft_arlistak_", toCSVFile);
-		
+	public void voiceKraftToNetsoftArlista() {		
 		LinkedHashMap<String, ArrayList<String>> toNetsoftArlista = new LinkedHashMap<>();
 		for (ArrayList<String> row : out) {
 			toNetsoftArlista.put(row.get(0), row);

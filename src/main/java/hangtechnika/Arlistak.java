@@ -63,31 +63,21 @@ public class Arlistak {
 					kedvezmenyTorzsvasarlo_5_nagykerPercent = tools.decimalFormat(
 							(1 - torzsvasarlo_5_nagyker / nettoEladasiEgysegar) * 100);
 
-					toFile.add(key + ";" + "Törzsvásárló 2" + ";" + tools.decimalFormat(torzsvasarlo_2) + ";"
-							+ tools.decimalFormat(nettoEladasiEgysegar) + ";" + arresPercent + ";"
+					toFile.add(key + ";" + "Törzsvásárló 2" + ";" + tools.round(torzsvasarlo_2) + ";"
+							+ tools.round(nettoEladasiEgysegar) + ";" + arresPercent + ";"
 							+ kedvezmenyTorzsvasarlo_2_Percent);
-					toFile.add(key + ";" + "Törzsvásárló 5-nagyker" + ";" + tools.decimalFormat(torzsvasarlo_5_nagyker) + ";"
-							+ tools.decimalFormat(nettoEladasiEgysegar) + ";" + arresPercent + ";"
+					toFile.add(key + ";" + "Törzsvásárló 5-nagyker" + ";" + tools.round(torzsvasarlo_5_nagyker) + ";"
+							+ tools.round(nettoEladasiEgysegar) + ";" + arresPercent + ";"
 							+ kedvezmenyTorzsvasarlo_5_nagykerPercent);
 				} else if (termekTipus.equals("Szolgáltatás")) {
-					toFile.add(key + ";" + "Törzsvásárló 2" + ";" + tools.decimalFormat(nettoEladasiEgysegar) + ";"
-							+ tools.decimalFormat(nettoEladasiEgysegar) + ";" + arresPercent + ";" + 0);
-					toFile.add(key + ";" + "Törzsvásárló 5-nagyker" + ";" + tools.decimalFormat(nettoBeszerzesiEgysegar) + ";"
-							+ tools.decimalFormat(nettoEladasiEgysegar) + ";" + arresPercent + ";" + 0);
+					toFile.add(key + ";" + "Törzsvásárló 2" + ";" + tools.round(nettoEladasiEgysegar) + ";"
+							+ tools.round(nettoEladasiEgysegar) + ";" + arresPercent + ";" + 0);
+					toFile.add(key + ";" + "Törzsvásárló 5-nagyker" + ";" + tools.round(nettoBeszerzesiEgysegar) + ";"
+							+ tools.round(nettoEladasiEgysegar) + ";" + arresPercent + ";" + 0);
 				}
 			}
 		}
 		return toFile;
 	}
-
-//	public static String decimalFormat(double number) {
-//
-//		Locale locale = new Locale("hu", "HU");
-//		String pattern = ".##";
-//		DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getNumberInstance(locale);
-//		decimalFormat.applyPattern(pattern);
-//		String formatted = decimalFormat.format(number);
-//		return formatted;
-//	}
 
 }
