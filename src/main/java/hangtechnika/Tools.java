@@ -3,11 +3,14 @@ package hangtechnika;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Set;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -66,11 +69,21 @@ public class Tools {
 		htKeys = hangzavarMap.get("export").keySet();
 	}
 
-	public String rounding(String numberSring) {
+	public String myDecimalFormat(String numberSring) {
 		Integer num = (int) (100 * Double.parseDouble(numberSring));
 		Double number = (double) (num / 100);
 		numberSring = String.valueOf(number);
 		return numberSring;
+	}
+	
+	public String decimalFormat(double number) {
+
+		Locale locale = new Locale("hu", "HU");
+		String pattern = ".##";
+		DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getNumberInstance(locale);
+		decimalFormat.applyPattern(pattern);
+		String formatted = decimalFormat.format(number);
+		return formatted;
 	}
 
 }

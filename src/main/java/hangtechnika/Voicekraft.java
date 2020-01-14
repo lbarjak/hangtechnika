@@ -32,7 +32,7 @@ public class Voicekraft {
 		for (String key : sheetFromKapott.keySet()) {
 			String termekKod = sheetFromKapott.get(key).get(0).replace(".0", "");
 			if (termekKod.matches("\\d{2,}.+") && tools.htKeys.contains(termekKod)) {
-				String nettoEladasiEgysegar = tools.rounding(sheetFromKapott.get(key).get(4));
+				String nettoEladasiEgysegar = tools.myDecimalFormat(sheetFromKapott.get(key).get(4));
 				String beszerzesiAr = String.valueOf((Double.parseDouble(nettoEladasiEgysegar) * 0.75));
 				String raktarkeszlet = sheetFromKapott.get(key).get(5);
 				out.add(new ArrayList<String>(Arrays.asList(termekKod, // Termék_kód

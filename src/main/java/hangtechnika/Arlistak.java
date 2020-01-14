@@ -1,12 +1,11 @@
 package hangtechnika;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Locale;
 
 public class Arlistak {
+	
+	private Tools tools = new Tools();
 
 	private ArrayList<String> toFile = new ArrayList<>();
 	private boolean monacor = false;
@@ -47,7 +46,7 @@ public class Arlistak {
 					continue;
 				}
 
-				arresPercent = round((1 - nettoBeszerzesiEgysegar / nettoEladasiEgysegar) * 100);
+				arresPercent = tools.decimalFormat((1 - nettoBeszerzesiEgysegar / nettoEladasiEgysegar) * 100);
 
 				if (termekTipus.equals("Termék")) {
 
@@ -60,35 +59,35 @@ public class Arlistak {
 						torzsvasarlo_5_nagyker = nettoBeszerzesiEgysegar * 1.12;
 					}
 
-					kedvezmenyTorzsvasarlo_2_Percent = round((1 - torzsvasarlo_2 / nettoEladasiEgysegar) * 100);
-					kedvezmenyTorzsvasarlo_5_nagykerPercent = round(
+					kedvezmenyTorzsvasarlo_2_Percent = tools.decimalFormat((1 - torzsvasarlo_2 / nettoEladasiEgysegar) * 100);
+					kedvezmenyTorzsvasarlo_5_nagykerPercent = tools.decimalFormat(
 							(1 - torzsvasarlo_5_nagyker / nettoEladasiEgysegar) * 100);
 
-					toFile.add(key + ";" + "Törzsvásárló 2" + ";" + round(torzsvasarlo_2) + ";"
-							+ round(nettoEladasiEgysegar) + ";" + arresPercent + ";"
+					toFile.add(key + ";" + "Törzsvásárló 2" + ";" + tools.decimalFormat(torzsvasarlo_2) + ";"
+							+ tools.decimalFormat(nettoEladasiEgysegar) + ";" + arresPercent + ";"
 							+ kedvezmenyTorzsvasarlo_2_Percent);
-					toFile.add(key + ";" + "Törzsvásárló 5-nagyker" + ";" + round(torzsvasarlo_5_nagyker) + ";"
-							+ round(nettoEladasiEgysegar) + ";" + arresPercent + ";"
+					toFile.add(key + ";" + "Törzsvásárló 5-nagyker" + ";" + tools.decimalFormat(torzsvasarlo_5_nagyker) + ";"
+							+ tools.decimalFormat(nettoEladasiEgysegar) + ";" + arresPercent + ";"
 							+ kedvezmenyTorzsvasarlo_5_nagykerPercent);
 				} else if (termekTipus.equals("Szolgáltatás")) {
-					toFile.add(key + ";" + "Törzsvásárló 2" + ";" + round(nettoEladasiEgysegar) + ";"
-							+ round(nettoEladasiEgysegar) + ";" + arresPercent + ";" + 0);
-					toFile.add(key + ";" + "Törzsvásárló 5-nagyker" + ";" + round(nettoBeszerzesiEgysegar) + ";"
-							+ round(nettoEladasiEgysegar) + ";" + arresPercent + ";" + 0);
+					toFile.add(key + ";" + "Törzsvásárló 2" + ";" + tools.decimalFormat(nettoEladasiEgysegar) + ";"
+							+ tools.decimalFormat(nettoEladasiEgysegar) + ";" + arresPercent + ";" + 0);
+					toFile.add(key + ";" + "Törzsvásárló 5-nagyker" + ";" + tools.decimalFormat(nettoBeszerzesiEgysegar) + ";"
+							+ tools.decimalFormat(nettoEladasiEgysegar) + ";" + arresPercent + ";" + 0);
 				}
 			}
 		}
 		return toFile;
 	}
 
-	public static String round(double number) {
-
-		Locale locale = new Locale("hu", "HU");
-		String pattern = ".##";
-		DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getNumberInstance(locale);
-		decimalFormat.applyPattern(pattern);
-		String formatted = decimalFormat.format(number);
-		return formatted;
-	}
+//	public static String decimalFormat(double number) {
+//
+//		Locale locale = new Locale("hu", "HU");
+//		String pattern = ".##";
+//		DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getNumberInstance(locale);
+//		decimalFormat.applyPattern(pattern);
+//		String formatted = decimalFormat.format(number);
+//		return formatted;
+//	}
 
 }
