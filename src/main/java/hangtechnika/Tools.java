@@ -73,8 +73,8 @@ public class Tools {
 		Integer num = (int) Math.round(Double.parseDouble(numberSring));
 		return num.toString();
 	}
-	public String round(Double numberSring) {
-		Integer num = (int) Math.round(numberSring);
+	public String round(Double number) {
+		Integer num = (int) Math.round(number);
 		return num.toString();
 	}
 	
