@@ -10,6 +10,7 @@ public class Hangtechnika {
 	
 	public static void main(String[] args)
 			throws FileNotFoundException, InvalidFormatException, IOException, OpenXML4JException {
+		//new FBT().convert();
 		new Voicekraft().convert();
 	}
 	

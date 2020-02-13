@@ -1,5 +1,6 @@
 package hangtechnika;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,9 +17,8 @@ import java.util.Set;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
 
-public class Tools {
-
-	LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> hangzavarMap = new LinkedHashMap<>();
+public class Tools implements GlobalVariables {
+	
 	Set<String> htKeys;
 
 	public String now() {
@@ -64,9 +64,10 @@ public class Tools {
 	}
 
 	public void hangzavarInit() throws FileNotFoundException, InvalidFormatException, IOException, OpenXML4JException {
-		String xlsxName = "hangzavar-xlsx-export-2020-01-12_22_51_47.xlsx";
-		new FromXLSX().read(xlsxName, hangzavarMap);
-		htKeys = hangzavarMap.get("export").keySet();
+		//String xlsxName = "hangzavar-xlsx-export-2020-02-11_23_10_23.xlsx";
+		String xlsxName = fileName("^hangzavar-xlsx-export-.+\\.xlsx$");
+		new FromXLSX().read(xlsxName, HANGZAVAR_MAP);
+		htKeys = HANGZAVAR_MAP.get("export").keySet();
 	}
 	
 	public String round(String numberSring) {
@@ -91,6 +92,22 @@ public class Tools {
 		decimalFormat.applyPattern(pattern);
 		String formatted = decimalFormat.format(number);
 		return formatted;
+	}
+	
+	String fileName(String regex) {
+		File folder = new File("./");
+		if (folder.exists()) {
+			//String regex = ".+_VK_Arlista.xlsx$";
+			File[] listOfFiles = folder.listFiles();
+			for (File file : listOfFiles) {
+				if (file.isFile() && file.getName().matches(regex)) {
+					return file.getName();
+				}
+			}
+		} else {
+			System.out.println("A folder nem létezik!");
+		}
+		return "";
 	}
 
 }

@@ -1,5 +1,6 @@
 package hangtechnika;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,12 +17,12 @@ public class Voicekraft {
 	private ArrayList<ArrayList<String>> sheetNamesKapottInput;
 	private String sheetNameFromKapott;
 	private LinkedHashMap<String, ArrayList<String>> sheetFromKapott;
-	private final String kapottFile = "bb11a3a45af20fe453cca9a783effd05_VK_Arlista.xlsx";
 	private final LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> kapottMap = new LinkedHashMap<>();
 	private final ArrayList<ArrayList<String>> out = new ArrayList<>();
-
+	
 	public void convert() throws FileNotFoundException, InvalidFormatException, IOException, OpenXML4JException {
-
+		
+		String kapottFile = tools.fileName(".+_VK_Arlista\\.xlsx$");
 		sheetNamesKapottInput = new FromXLSX().read(kapottFile, kapottMap);
 		sheetNameFromKapott = sheetNamesKapottInput.get(0).get(0);
 		sheetFromKapott = kapottMap.get(sheetNameFromKapott);
