@@ -39,7 +39,7 @@ public class Tools implements GlobalVariables {
 		String time = now();
 		FileWriter fw;
 		try {
-			fw = new FileWriter(nameOfFile + time + ".csv");
+			fw = new FileWriter("../hangtechnika_files/" + nameOfFile + time + ".csv");
 			for (String row : toCSVFile) {
 				fw.write(row + "\n");
 			}
@@ -64,7 +64,6 @@ public class Tools implements GlobalVariables {
 	}
 
 	public void hangzavarInit() throws FileNotFoundException, InvalidFormatException, IOException, OpenXML4JException {
-		//String xlsxName = "hangzavar-xlsx-export-2020-02-11_23_10_23.xlsx";
 		String xlsxName = fileName("^hangzavar-xlsx-export-.+\\.xlsx$");
 		new FromXLSX().read(xlsxName, HANGZAVAR_MAP);
 		htKeys = HANGZAVAR_MAP.get("export").keySet();
@@ -95,13 +94,12 @@ public class Tools implements GlobalVariables {
 	}
 	
 	String fileName(String regex) {
-		File folder = new File("./");
+		File folder = new File("../hangtechnika_files");
 		if (folder.exists()) {
-			//String regex = ".+_VK_Arlista.xlsx$";
 			File[] listOfFiles = folder.listFiles();
 			for (File file : listOfFiles) {
 				if (file.isFile() && file.getName().matches(regex)) {
-					return file.getName();
+					return folder + "/" + file.getName();
 				}
 			}
 		} else {

@@ -85,7 +85,7 @@ public class Voicekraft {
 		ToXLSX toxlsx = new ToXLSX();
 		toxlsx.write(toShoprenterMap);
 		String time = tools.now();
-		toxlsx.writeout("voicek_shopr_keszl_" + time + ".xlsx");
+		toxlsx.writeout("../hangtechnika_files/voicek_shopr_keszl_" + time + ".xlsx");
 	}
 	
 }
