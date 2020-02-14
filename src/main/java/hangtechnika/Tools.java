@@ -20,24 +20,24 @@ import java.util.Set;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
 
-public class Tools implements GlobalVariables {
+class Tools implements GlobalVariables {
 
 	Set<String> htKeys;
 
-	public String now() {
+	String now() {
 		Date today = new Date();
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd_HHmm");
 		String now = formatter.format(today);
 		return now;
 	}
 
-	public void diff(Date start, Date stop) {
+	void diff(Date start, Date stop) {
 		long diffSec = (stop.getTime() - start.getTime()) / 1000;
 		System.out.println("--------------------");
 		System.out.println(diffSec / 60 + " perc " + diffSec % 60 + " másodperc");
 	}
 
-	public void writeToFileCSV(String nameOfFile, ArrayList<String> toCSVFile) {
+	void writeToFileCSV(String nameOfFile, ArrayList<String> toCSVFile) {
 
 		String time = now();
 		FileWriter fw;
@@ -52,7 +52,7 @@ public class Tools implements GlobalVariables {
 		}
 	}
 
-	public LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> prebuildToShoprenter() {
+	LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> prebuildToShoprenter() {
 		LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> toShoprenterMap = new LinkedHashMap<>();
 		LinkedHashMap<String, ArrayList<String>> export = new LinkedHashMap<>();
 		toShoprenterMap.put("export", export);
@@ -66,29 +66,29 @@ public class Tools implements GlobalVariables {
 		return toShoprenterMap;
 	}
 
-	public void hangzavarInit() throws FileNotFoundException, InvalidFormatException, IOException, OpenXML4JException {
+	void hangzavarInit() throws FileNotFoundException, InvalidFormatException, IOException, OpenXML4JException {
 		String xlsxName = fileName("^hangzavar-xlsx-export-.+\\.xlsx$");
 		new FromXLSX().read(xlsxName, HANGZAVAR_MAP);
 		htKeys = HANGZAVAR_MAP.get("export").keySet();
 	}
 
-	public String round(String numberSring) {
+	String round(String numberSring) {
 		Integer num = (int) Math.round(Double.parseDouble(numberSring));
 		return num.toString();
 	}
 
-	public String round(Double number) {
+	String round(Double number) {
 		Integer num = (int) Math.round(number);
 		return num.toString();
 	}
 
-	public String round2(String numberSring) {
+	String round2(String numberSring) {
 		Double num = Math.round(100.0 * (Double.parseDouble(numberSring))) / 100.0;
 		DecimalFormat df = new DecimalFormat("0,00");
 		return df.format(num);
 	}
 
-	public String decimalFormat(double number) {
+	String decimalFormat(double number) {
 		Locale locale = new Locale("hu", "HU");
 		String pattern = "0.00";
 		DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getNumberInstance(locale);
@@ -117,7 +117,7 @@ public class Tools implements GlobalVariables {
 		return "";
 	}
 
-	public void sortFilesByDateCreatedReverse(File[] files) {
+	private void sortFilesByDateCreatedReverse(File[] files) {
 		Arrays.sort(files, new Comparator<File>() {
 			public int compare(File f1, File f2) {
 				long l1 = getFileCreationEpoch(f1);
@@ -127,7 +127,7 @@ public class Tools implements GlobalVariables {
 		});
 	}
 
-	public long getFileCreationEpoch(File file) {
+	private long getFileCreationEpoch(File file) {
 		try {
 			BasicFileAttributes attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
 			return attr.creationTime().toInstant().toEpochMilli();
