@@ -19,9 +19,9 @@ public class Voicekraft {
 	private LinkedHashMap<String, ArrayList<String>> sheetFromKapott;
 	private final LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> kapottMap = new LinkedHashMap<>();
 	private final ArrayList<ArrayList<String>> out = new ArrayList<>();
-	
+
 	public void convert() throws FileNotFoundException, InvalidFormatException, IOException, OpenXML4JException {
-		
+
 		String kapottFile = tools.fileName(".+_VK_Arlista\\.xlsx$");
 		sheetNamesKapottInput = new FromXLSX().read(kapottFile, kapottMap);
 		sheetNameFromKapott = sheetNamesKapottInput.get(0).get(0);
@@ -58,7 +58,7 @@ public class Voicekraft {
 		tools.writeToFileCSV("voicek_netsoft_arfriss_", toCSVFile);
 	}
 
-	public void voiceKraftToNetsoftArlista() {		
+	public void voiceKraftToNetsoftArlista() {
 		LinkedHashMap<String, ArrayList<String>> toNetsoftArlista = new LinkedHashMap<>();
 		for (ArrayList<String> row : out) {
 			toNetsoftArlista.put(row.get(0), row);
@@ -69,7 +69,7 @@ public class Voicekraft {
 		for (int i = 0; i < toFile.size(); i++) {
 			toFile.set(i, toFile.get(i).replaceFirst("(;[^;]+){2}$", ""));
 		}
-		tools.writeToFileCSV("voicek_netsoft_arlistak_", toFile);	
+		tools.writeToFileCSV("voicek_netsoft_arlistak_", toFile);
 	}
 
 	public void voiceKraftToShoprenterKeszlet() throws FileNotFoundException, IOException {
@@ -87,5 +87,5 @@ public class Voicekraft {
 		String time = tools.now();
 		toxlsx.writeout("../hangtechnika_files/voicek_shopr_keszl_" + time + ".xlsx");
 	}
-	
+
 }

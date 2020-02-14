@@ -109,7 +109,7 @@ public class Tools implements GlobalVariables {
 			}
 			File[] listOfXLSXToSort = new File[listOfXLSX.size()];
 			listOfXLSXToSort = listOfXLSX.toArray(listOfXLSXToSort);
-			sortFilesByDateCreated(listOfXLSXToSort);
+			sortFilesByDateCreatedReverse(listOfXLSXToSort);
 			return folder + "/" + listOfXLSXToSort[0].getName();
 		} else {
 			System.out.println("A folder nem létezik!");
@@ -117,13 +117,12 @@ public class Tools implements GlobalVariables {
 		return "";
 	}
 
-	public void sortFilesByDateCreated(File[] files) {
+	public void sortFilesByDateCreatedReverse(File[] files) {
 		Arrays.sort(files, new Comparator<File>() {
 			public int compare(File f1, File f2) {
 				long l1 = getFileCreationEpoch(f1);
 				long l2 = getFileCreationEpoch(f2);
-				//return Long.valueOf(l1).compareTo(l2);
-				return Long.valueOf(l2).compareTo(l1);//reverse
+				return Long.valueOf(l2).compareTo(l1);
 			}
 		});
 	}
