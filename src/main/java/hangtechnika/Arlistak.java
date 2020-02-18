@@ -18,16 +18,16 @@ public class Arlistak {
 		double nettoBeszerzesiEgysegar = 0;
 		double nettoEladasiEgysegar = 0;
 		String termekTipus = "";
-		double torzsvasarlo_2_arany = 0.6;
-		double torzsvasarlo_5_nagyker_arany = 0.225;
+		double torzsvasarlo_arany = 0.6;
+		double nagyker_arany = 0.225;
 		double minimumArszorzo = 1.1099;
-//		double torzsvasarlo_2_arany = 1;
-//		double torzsvasarlo_5_nagyker_arany = 1;
+//		double torzsvasarlo_arany = 1;
+//		double nagyker_arany = 1;
 //		double minimumArszorzo = 1;
-		double torzsvasarlo_2 = 0;
-		double torzsvasarlo_5_nagyker = 0;
-		String kedvezmenyTorzsvasarlo_2_Percent = "";
-		String kedvezmenyTorzsvasarlo_5_nagykerPercent = "";
+		double torzsvasarlo = 0;
+		double nagyker = 0;
+		String kedvezmenyTorzsvasarloPercent = "";
+		String kedvezmenyNagykerPercent = "";
 		String arresPercent;
 
 		for (String key : toNetsoftArlista.keySet()) {
@@ -41,8 +41,8 @@ public class Arlistak {
 				termekTipus = toNetsoftArlista.get(key).get(termekTipusIndex);
 
 				if (nettoBeszerzesiEgysegar == 0 && nettoEladasiEgysegar == 0) {
-					toFile.add(key + ";" + "Törzsvásárló 2" + ";" + 0 + ";" + 0 + ";" + 0 + ";" + 0);
-					toFile.add(key + ";" + "Törzsvásárló 5-nagyker" + ";" + 0 + ";" + 0 + ";" + 0 + ";" + 0);
+					toFile.add(key + ";" + "Törzsvásárló" + ";" + 0 + ";" + 0 + ";" + 0 + ";" + 0);
+					toFile.add(key + ";" + "Nagyker" + ";" + 0 + ";" + 0 + ";" + 0 + ";" + 0);
 					continue;
 				}
 
@@ -50,29 +50,29 @@ public class Arlistak {
 
 				if (termekTipus.equals("Termék")) {
 
-					torzsvasarlo_2 = (nettoEladasiEgysegar / minimumArszorzo - nettoBeszerzesiEgysegar)
-							* torzsvasarlo_2_arany + nettoBeszerzesiEgysegar * minimumArszorzo;
+					torzsvasarlo = (nettoEladasiEgysegar / minimumArszorzo - nettoBeszerzesiEgysegar)
+							* torzsvasarlo_arany + nettoBeszerzesiEgysegar * minimumArszorzo;
 
-					torzsvasarlo_5_nagyker = (nettoEladasiEgysegar / minimumArszorzo - nettoBeszerzesiEgysegar)
-							* torzsvasarlo_5_nagyker_arany + nettoBeszerzesiEgysegar * minimumArszorzo;
+					nagyker = (nettoEladasiEgysegar / minimumArszorzo - nettoBeszerzesiEgysegar)
+							* nagyker_arany + nettoBeszerzesiEgysegar * minimumArszorzo;
 					if (monacor == true) {
-						torzsvasarlo_5_nagyker = nettoBeszerzesiEgysegar * 1.12;
+						nagyker = nettoBeszerzesiEgysegar * 1.12;
 					}
 
-					kedvezmenyTorzsvasarlo_2_Percent = tools.decimalFormat((1 - torzsvasarlo_2 / nettoEladasiEgysegar) * 100);
-					kedvezmenyTorzsvasarlo_5_nagykerPercent = tools.decimalFormat(
-							(1 - torzsvasarlo_5_nagyker / nettoEladasiEgysegar) * 100);
+					kedvezmenyTorzsvasarloPercent = tools.decimalFormat((1 - torzsvasarlo / nettoEladasiEgysegar) * 100);
+					kedvezmenyNagykerPercent = tools.decimalFormat(
+							(1 - nagyker / nettoEladasiEgysegar) * 100);
 
-					toFile.add(key + ";" + "Törzsvásárló 2" + ";" + tools.round(torzsvasarlo_2) + ";"
+					toFile.add(key + ";" + "Törzsvásárló" + ";" + tools.round(torzsvasarlo) + ";"
 							+ tools.round(nettoEladasiEgysegar) + ";" + arresPercent + ";"
-							+ kedvezmenyTorzsvasarlo_2_Percent);
-					toFile.add(key + ";" + "Törzsvásárló 5-nagyker" + ";" + tools.round(torzsvasarlo_5_nagyker) + ";"
+							+ kedvezmenyTorzsvasarloPercent);
+					toFile.add(key + ";" + "Nagyker" + ";" + tools.round(nagyker) + ";"
 							+ tools.round(nettoEladasiEgysegar) + ";" + arresPercent + ";"
-							+ kedvezmenyTorzsvasarlo_5_nagykerPercent);
+							+ kedvezmenyNagykerPercent);
 				} else if (termekTipus.equals("Szolgáltatás")) {
-					toFile.add(key + ";" + "Törzsvásárló 2" + ";" + tools.round(nettoEladasiEgysegar) + ";"
+					toFile.add(key + ";" + "Törzsvásárló" + ";" + tools.round(nettoEladasiEgysegar) + ";"
 							+ tools.round(nettoEladasiEgysegar) + ";" + arresPercent + ";" + 0);
-					toFile.add(key + ";" + "Törzsvásárló 5-nagyker" + ";" + tools.round(nettoBeszerzesiEgysegar) + ";"
+					toFile.add(key + ";" + "Nagyker" + ";" + tools.round(nettoBeszerzesiEgysegar) + ";"
 							+ tools.round(nettoEladasiEgysegar) + ";" + arresPercent + ";" + 0);
 				}
 			}

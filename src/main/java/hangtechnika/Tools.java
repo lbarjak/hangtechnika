@@ -23,6 +23,7 @@ import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
 class Tools implements GlobalVariables {
 
 	Set<String> htKeys;
+	File folder = new File("../hangtechnika_files/");
 
 	String now() {
 		Date today = new Date();
@@ -42,7 +43,7 @@ class Tools implements GlobalVariables {
 		String time = now();
 		FileWriter fw;
 		try {
-			fw = new FileWriter("../hangtechnika_files/" + nameOfFile + time + ".csv");
+			fw = new FileWriter(folder + "/" + nameOfFile + time + ".csv");
 			for (String row : toCSVFile) {
 				fw.write(row + "\n");
 			}
@@ -98,7 +99,7 @@ class Tools implements GlobalVariables {
 	}
 
 	String fileName(String regex) {
-		File folder = new File("../hangtechnika_files");
+		//File folder = new File("../hangtechnika_files");
 		ArrayList<File> listOfXLSX = new ArrayList<>();
 		if (folder.exists()) {
 			File[] listOfFiles = folder.listFiles();
