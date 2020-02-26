@@ -1,6 +1,5 @@
 package hangtechnika;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,23 +12,42 @@ import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
 public class Voicekraft {
 
 	private Tools tools = new Tools();
-
-	private ArrayList<ArrayList<String>> sheetNamesKapottInput;
-	private String sheetNameFromKapott;
+	
+	private String time;
 	private LinkedHashMap<String, ArrayList<String>> sheetFromKapott;
-	private final LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> kapottMap = new LinkedHashMap<>();
 	private final ArrayList<ArrayList<String>> out = new ArrayList<>();
 
 	public void convert() throws FileNotFoundException, InvalidFormatException, IOException, OpenXML4JException {
+		
+		//Az out később a sr fejléc szerint lesz, jelenleg netsoft-os:
+		out.add(new ArrayList<String>(Arrays.asList("Termék kód", "Nettó eladási egységár", "Beszerzési ár (Nettó)",
+				"Termék típus", "Raktárkészlet")));
+		
+		tools.hangzavarInit();
+		
+		kapottFileGetWorkingSheet(tools.fileName(".+_VK_Arlista\\.xlsx$"));
+		voicekraftSpec();
+		
+		time = tools.now();
+		toNetsoftArfrissites();
+		toNetsoftArlista();
+		toShoprenterKeszlet();
+	}
 
-		String kapottFile = tools.fileName(".+_VK_Arlista\\.xlsx$");
+	private void kapottFileGetWorkingSheet(String kapottFile)
+			throws FileNotFoundException, IOException, InvalidFormatException, OpenXML4JException {
+		ArrayList<ArrayList<String>> sheetNamesKapottInput;
+		String sheetNameFromKapott;
+		LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> kapottMap = new LinkedHashMap<>();
 		sheetNamesKapottInput = new FromXLSX().read(kapottFile, kapottMap);
 		sheetNameFromKapott = sheetNamesKapottInput.get(0).get(0);
 		sheetFromKapott = kapottMap.get(sheetNameFromKapott);
+	}
 
-		out.add(new ArrayList<String>(Arrays.asList("Termék kód", "Nettó eladási egységár", "Beszerzési ár (Nettó)",
-				"Termék típus", "Raktárkészlet")));
-		tools.hangzavarInit();
+	private void voicekraftSpec() {
+		//Előbb le kellene válogatni a kulcsokat --> residualAB
+		//Voicekraft fejléc:
+		//Cikkszám (0); Kategória név/nevek (1); Terméknév (hu) (2); Bruttó ár (3); Nettó ár (4); Raktárkészlet (5)
 		for (String key : sheetFromKapott.keySet()) {
 			String termekKod = sheetFromKapott.get(key).get(0).replace(".0", "");
 			if (termekKod.matches("\\d{2,}.+") && tools.htKeys.contains(termekKod)) {
@@ -44,21 +62,17 @@ public class Voicekraft {
 				)));
 			}
 		}
-
-		voiceKraftToNetsoftArfrissites();
-		voiceKraftToNetsoftArlista();
-		voiceKraftToShoprenterKeszlet();
 	}
 
-	public void voiceKraftToNetsoftArfrissites() {
+	public void toNetsoftArfrissites() {
 		ArrayList<String> toCSVFile = new ArrayList<>();
 		for (ArrayList<String> row : out) {
 			toCSVFile.add(row.get(0) + ";" + row.get(1).replace(".", ","));
 		}
-		tools.writeToFileCSV("voicek_netsoft_arfriss_", toCSVFile);
+		tools.writeToFileCSV("netsoft_arfriss_" + time + ".csv", toCSVFile);
 	}
 
-	public void voiceKraftToNetsoftArlista() {
+	public void toNetsoftArlista() {
 		LinkedHashMap<String, ArrayList<String>> toNetsoftArlista = new LinkedHashMap<>();
 		for (ArrayList<String> row : out) {
 			toNetsoftArlista.put(row.get(0), row);
@@ -69,10 +83,10 @@ public class Voicekraft {
 		for (int i = 0; i < toFile.size(); i++) {
 			toFile.set(i, toFile.get(i).replaceFirst("(;[^;]+){2}$", ""));
 		}
-		tools.writeToFileCSV("voicek_netsoft_arlistak_", toFile);
+		tools.writeToFileCSV("netsoft_arlistak_" + time + ".csv", toFile);
 	}
 
-	public void voiceKraftToShoprenterKeszlet() throws FileNotFoundException, IOException {
+	public void toShoprenterKeszlet() throws FileNotFoundException, IOException {
 		LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> toShoprenterMap = tools.prebuildToShoprenter();
 		LinkedHashMap<String, ArrayList<String>> export = toShoprenterMap.get("export");
 		for (ArrayList<String> row : out) {
@@ -84,8 +98,7 @@ public class Voicekraft {
 		export.remove("Termék kód");
 		ToXLSX toxlsx = new ToXLSX();
 		toxlsx.write(toShoprenterMap);
-		String time = tools.now();
-		toxlsx.writeout("../hangtechnika_files/voicek_shopr_keszl_" + time + ".xlsx");
+		toxlsx.writeout("../hangtechnika_files/shopr_keszl_" + time + ".xlsx");
 	}
 
 }

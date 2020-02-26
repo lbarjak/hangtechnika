@@ -40,10 +40,9 @@ class Tools implements GlobalVariables {
 
 	void writeToFileCSV(String nameOfFile, ArrayList<String> toCSVFile) {
 
-		String time = now();
 		FileWriter fw;
 		try {
-			fw = new FileWriter(folder + "/" + nameOfFile + time + ".csv");
+			fw = new FileWriter(folder + "/" + nameOfFile);
 			for (String row : toCSVFile) {
 				fw.write(row + "\n");
 			}

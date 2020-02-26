@@ -10,6 +10,8 @@ public class Hangtechnika {
 
 	public static void main(String[] args)
 			throws FileNotFoundException, InvalidFormatException, IOException, OpenXML4JException {
+		
+		//Ide gyártó osztály kell ami egykét ad vissza: new Tools().hangzavarInit();
 		// new FBT().convert();
 		new Voicekraft().convert();
 	}
