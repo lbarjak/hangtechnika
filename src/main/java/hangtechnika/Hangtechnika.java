@@ -11,9 +11,11 @@ public class Hangtechnika {
 	public static void main(String[] args)
 			throws FileNotFoundException, InvalidFormatException, IOException, OpenXML4JException {
 		
-		//Ide gyártó osztály kell ami egykét ad vissza: new Tools().hangzavarInit();
+		//Ide gyártó osztály kell ami egykét ad vissza a htKeys miatt: new Tools().hangzavarInit();
+		Tools tools = Tools.tools();
+		tools.hangzavarInit();
 		// new FBT().convert();
-		new Voicekraft().convert();
+		new Arak().convert();
 	}
 
 }

@@ -11,7 +11,8 @@ import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
 
 public class FBT implements GlobalVariables {
 
-	private Tools tools = new Tools();
+	//private Tools tools = new Tools();
+	Tools tools = Tools.tools();
 
 	private ArrayList<ArrayList<String>> sheetNamesKapottInput;
 	private String sheetNameFromKapott;
@@ -28,8 +29,9 @@ public class FBT implements GlobalVariables {
 
 //		out.add(new ArrayList<String>(Arrays.asList("Termék kód", "Nettó eladási egységár", "Beszerzési ár (Nettó)",
 //				"Termék típus", "Raktárkészlet")));
-		tools.hangzavarInit();
-		int indexOfAlapar = HANGZAVAR_MAP.get("export").get("Cikkszám").indexOf("Alapár");
+		//tools.hangzavarInit();
+		//int indexOfAlapar = HANGZAVAR_MAP.get("export").get("Cikkszám").indexOf("Alapár");
+		int indexOfAlapar = tools.htIndex.get("Alapár");
 		for (String key : sheetFromKapott.keySet()) {
 			// Az FBT cikkszám nálunk a 'Gyártói cikkszám' lesz
 			// A mi cikkszámunk az FBT második oszlopában van, space eltérések lehetnek

@@ -5,7 +5,8 @@ import java.util.LinkedHashMap;
 
 public class Arlistak {
 	
-	private Tools tools = new Tools();
+	//private Tools tools = new Tools();
+	Tools tools = Tools.tools();
 
 	private ArrayList<String> toFile = new ArrayList<>();
 	private boolean monacor = false;

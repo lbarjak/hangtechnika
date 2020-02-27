@@ -23,7 +23,25 @@ import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
 class Tools implements GlobalVariables {
 
 	Set<String> htKeys;
+	LinkedHashMap<String, Integer> htIndex = new LinkedHashMap<>();
 	File folder = new File("../hangtechnika_files/");
+
+	private static Tools tools = null;
+
+	private Tools() {
+
+	}
+
+	static public Tools tools() {
+		if (tools == null) {
+			tools = new Tools();
+		}
+		return tools;
+	}
+
+	public void finalize() {
+		tools = null;
+	}
 
 	String now() {
 		Date today = new Date();
@@ -70,6 +88,11 @@ class Tools implements GlobalVariables {
 		String xlsxName = fileName("^hangzavar-xlsx-export-.+\\.xlsx$");
 		new FromXLSX().read(xlsxName, HANGZAVAR_MAP);
 		htKeys = HANGZAVAR_MAP.get("export").keySet();
+		ArrayList<String> htFejlec = HANGZAVAR_MAP.get("export").get("Cikkszám");
+		for (Integer i = 0; i < htFejlec.size(); i++) {
+			htIndex.put(htFejlec.get(i), i);
+			System.out.println(i + " " + htFejlec.get(i));
+		}
 	}
 
 	String round(String numberSring) {
@@ -98,7 +121,7 @@ class Tools implements GlobalVariables {
 	}
 
 	String fileName(String regex) {
-		//File folder = new File("../hangtechnika_files");
+		// File folder = new File("../hangtechnika_files");
 		ArrayList<File> listOfXLSX = new ArrayList<>();
 		if (folder.exists()) {
 			File[] listOfFiles = folder.listFiles();

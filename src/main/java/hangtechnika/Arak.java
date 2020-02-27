@@ -9,9 +9,10 @@ import java.util.LinkedHashMap;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
 
-public class Voicekraft {
+public class Arak {
 
-	private Tools tools = new Tools();
+	//private Tools tools = new Tools();
+	private Tools tools = Tools.tools();
 
 	private String time;
 	private LinkedHashMap<String, ArrayList<String>> sheetFromKapott;
@@ -23,7 +24,7 @@ public class Voicekraft {
 		out.add(new ArrayList<String>(Arrays.asList("Termék kód", "Nettó eladási egységár", "Beszerzési ár (Nettó)",
 				"Termék típus", "Raktárkészlet")));
 
-		tools.hangzavarInit();
+		//tools.hangzavarInit();
 
 		kapottFileGetWorkingSheet(tools.fileName(".+_VK_Arlista\\.xlsx$"));
 		voicekraftSpec();
