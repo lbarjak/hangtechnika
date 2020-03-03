@@ -15,7 +15,8 @@ public class Hangtechnika {
 		Tools tools = Tools.tools();
 		tools.hangzavarInit();
 		// new FBT().convert();
-		new Arak().convert();
+		// new Arak().convert();
+		new GyartoiCikkszam().insertCikkszam();
 	}
 
 }

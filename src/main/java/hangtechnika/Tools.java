@@ -24,7 +24,7 @@ class Tools implements GlobalVariables {
 
 	Set<String> htKeys;
 	LinkedHashMap<String, Integer> htIndex = new LinkedHashMap<>();
-	File folder = new File("../hangtechnika_files/");
+	private File folder = new File("../hangtechnika_files/");
 
 	private static Tools tools = null;
 
@@ -91,7 +91,7 @@ class Tools implements GlobalVariables {
 		ArrayList<String> htFejlec = HANGZAVAR_MAP.get("export").get("Cikkszám");
 		for (Integer i = 0; i < htFejlec.size(); i++) {
 			htIndex.put(htFejlec.get(i), i);
-			System.out.println(i + " " + htFejlec.get(i));
+			//System.out.println(i + " " + htFejlec.get(i));
 		}
 	}
 

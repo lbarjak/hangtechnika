@@ -74,6 +74,14 @@ public class Arak {
 				}
 			}
 		}
+		
+//		for(String htKey : tools.htKeys) {
+//			for (String kapottKey : sheetFromKapott.keySet()) {
+//				if(htKey.equals(kapottKey)) {
+//					//nothing
+//				} 
+//			}
+//		}
 	}
 
 	public void toNetsoftArfrissites() {
