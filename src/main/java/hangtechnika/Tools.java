@@ -72,15 +72,18 @@ class Tools implements GlobalVariables {
 
 	LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> prebuildToShoprenter() {
 		LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> toShoprenterMap = new LinkedHashMap<>();
+		ArrayList<String> fejlecHU = new ArrayList<String>(Arrays.asList("Cikkszám", "Nincs készleten állapot"));
+		ArrayList<String> fejlecEN = new ArrayList<String>(Arrays.asList("sku", "stockStatusName"));
 		LinkedHashMap<String, ArrayList<String>> export = new LinkedHashMap<>();
 		toShoprenterMap.put("export", export);
-		toShoprenterMap.get("export").put("Cikkszám",
-				new ArrayList<>(Arrays.asList("Cikkszám", "Nincs készleten állapot")));
+		//toShoprenterMap.get("export").put("Cikkszám", new ArrayList<>(Arrays.asList("Cikkszám", "Nincs készleten állapot")));
+		toShoprenterMap.get("export").put("Cikkszám", fejlecHU);
 		LinkedHashMap<String, ArrayList<String>> columns = new LinkedHashMap<>();
 		toShoprenterMap.put("columns", columns);
-		toShoprenterMap.get("columns").put("sku", new ArrayList<>(Arrays.asList("sku", "stockStatusName")));
-		toShoprenterMap.get("columns").put("Cikkszám",
-				new ArrayList<>(Arrays.asList("Cikkszám", "Nincs készleten állapot")));
+		//toShoprenterMap.get("columns").put("sku", new ArrayList<>(Arrays.asList("sku", "stockStatusName")));
+		toShoprenterMap.get("columns").put("sku", fejlecEN);
+		//toShoprenterMap.get("columns").put("Cikkszám", new ArrayList<>(Arrays.asList("Cikkszám", "Nincs készleten állapot")));
+		toShoprenterMap.get("columns").put("Cikkszám", fejlecHU);
 		return toShoprenterMap;
 	}
 

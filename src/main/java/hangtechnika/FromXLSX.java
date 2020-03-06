@@ -21,12 +21,13 @@ public class FromXLSX {
 
 	String sheetName;
 	String firstCellOfFirstRow;
-	ArrayList<ArrayList<String>> sheetNamesAndFirstElement = new ArrayList<>();
-
+	
 	public ArrayList<ArrayList<String>> read(String xlsxName,
 			LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> output)
 			throws FileNotFoundException, IOException, InvalidFormatException, OpenXML4JException {
-
+		
+		ArrayList<ArrayList<String>> sheetNamesAndFirstElement = new ArrayList<>();
+		
 		OPCPackage fis = OPCPackage.open(new FileInputStream(xlsxName));
 
 		XSSFWorkbook myWorkBook = new XSSFWorkbook(fis);
