@@ -101,7 +101,7 @@ public class Arak {
 		toFile.add(0, "Termék kód" + ";" + "Árlista" + ";" + "Egységár" + ";" + "Alapár (Nettó)" + ";" + "Árrés %" + ";"
 				+ "Kedvezmény %");
 		for (int i = 0; i < toFile.size(); i++) {
-			toFile.set(i, toFile.get(i).replaceFirst("(;[^;]+){2}$", ""));
+			toFile.set(i, toFile.get(i).replaceFirst("(;[^;]+){2}$", ""));//két utolsó oszlopot leveszi 
 		}
 		tools.writeToFileCSV("netsoft_arlistak_" + time + ".csv", toFile);
 	}

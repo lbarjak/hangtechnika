@@ -12,7 +12,7 @@ public class Arlistak {
 	private boolean monacor = false;
 
 	public ArrayList<String> calculate(LinkedHashMap<String, ArrayList<String>> toNetsoftArlista) {
-
+		//Formátum: Termék kód, Nettó eadási egységár, Beszerzési ár (nettó), Termék típus
 		int nettoEladasiEgysegarIndex = toNetsoftArlista.get("Termék kód").indexOf("Nettó eladási egységár");
 		int nettoBeszerzesiEgysegarIndex = toNetsoftArlista.get("Termék kód").indexOf("Beszerzési ár (Nettó)");
 		int termekTipusIndex = toNetsoftArlista.get("Termék kód").indexOf("Termék típus");

@@ -32,7 +32,10 @@ public class GyartoiCikkszam implements GlobalVariables {
 			for(String cikkszam : htWork.keySet()) {
 				if(htWork.get(cikkszam).contains(gyartoiCikkszam)) {
 					gySheet.get(gyartoiCikkszam).set(indexOfCikkszam, cikkszam);
-					System.out.println(gySheet.get(gyartoiCikkszam));
+					//System.out.println(gySheet.get(gyartoiCikkszam));
+					System.out.println(gySheet.get(gyartoiCikkszam).get(1) + ";" 
+					+ gySheet.get(gyartoiCikkszam).get(2) + ";" 
+							+ gySheet.get(gyartoiCikkszam).get(3) + ";" + "Termék");
 				}
 			}
 		}
